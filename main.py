@@ -16,7 +16,16 @@ JOKE = (
 )
 
 
+def _validate(line: str) -> None:
+    """Enforce the bounty gate locally: 1-140 chars, not only whitespace."""
+    if not line.strip():
+        raise ValueError("entry must not be only whitespace")
+    if len(line) > 140:
+        raise ValueError(f"entry is {len(line)} chars, over the 140 cap")
+
+
 def main() -> None:
+    _validate(JOKE)
     output_dir = "/output"
     os.makedirs(output_dir, exist_ok=True)
     path = os.path.join(output_dir, "entry.txt")
